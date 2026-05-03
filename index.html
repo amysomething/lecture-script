@@ -7,150 +7,40 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; background: #F5F3EE; color: #1A1A1A; min-height: 100vh; }
-
-  /* ── Timer Bar ── */
-  #timer-bar {
-    position: sticky; top: 0; z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid #E5E2DA;
-    padding: 12px 16px 10px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  #clock {
-    font-size: 36px; font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 1px;
-    color: #1A1A1A;
-    transition: color 0.5s;
-  }
+  #timer-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #E5E2DA; padding: 12px 16px 10px; display: flex; align-items: center; justify-content: space-between; }
+  #clock { font-size: 36px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 1px; color: #1A1A1A; transition: color 0.5s; }
   #clock.warn { color: #B86A00; }
   #clock.over { color: #C0392B; }
   #progress-wrap { height: 4px; background: #E5E2DA; border-radius: 2px; margin-top: 4px; width: 120px; }
   #progress-bar { height: 4px; border-radius: 2px; background: #2E7D57; transition: width 1s linear, background 0.5s; width: 0%; }
   #timer-controls { display: flex; gap: 8px; }
-  .ctrl-btn {
-    font-size: 15px; font-weight: 500;
-    padding: 8px 18px;
-    border-radius: 10px;
-    border: 1.5px solid #C8C5BC;
-    background: transparent;
-    color: #1A1A1A;
-    cursor: pointer;
-    transition: background 0.15s;
-    -webkit-user-select: none;
-  }
+  .ctrl-btn { font-size: 15px; font-weight: 500; padding: 8px 18px; border-radius: 10px; border: 1.5px solid #C8C5BC; background: transparent; color: #1A1A1A; cursor: pointer; transition: background 0.15s; -webkit-user-select: none; }
   .ctrl-btn:active { background: #EDEAE3; }
   #btn-start { border-color: #2E7D57; color: #2E7D57; }
   #btn-start.paused { border-color: #B86A00; color: #B86A00; }
-
-  /* ── Slide Nav ── */
-  #slide-nav {
-    display: flex; align-items: center;
-    padding: 10px 16px;
-    gap: 8px;
-    background: #F5F3EE;
-  }
-  .nav-btn {
-    font-size: 15px; font-weight: 500;
-    padding: 8px 14px;
-    border-radius: 10px;
-    border: 1.5px solid #C8C5BC;
-    background: #fff;
-    color: #1A1A1A;
-    cursor: pointer;
-    -webkit-user-select: none;
-    transition: background 0.15s;
-  }
+  #slide-nav { display: flex; align-items: center; padding: 10px 16px; gap: 8px; background: #F5F3EE; }
+  .nav-btn { font-size: 15px; font-weight: 500; padding: 8px 14px; border-radius: 10px; border: 1.5px solid #C8C5BC; background: #fff; color: #1A1A1A; cursor: pointer; -webkit-user-select: none; transition: background 0.15s; }
   .nav-btn:active { background: #EDEAE3; }
   .nav-btn:disabled { opacity: 0.3; pointer-events: none; }
-  #slide-counter {
-    flex: 1; text-align: center;
-    font-size: 14px; color: #888;
-  }
+  #slide-counter { flex: 1; text-align: center; font-size: 14px; color: #888; }
   #btn-next { background: #2E7D57; color: #fff; border-color: #2E7D57; }
   #btn-next:active { background: #235F43; }
-
-  /* ── Card ── */
-  #card {
-    margin: 0 12px 20px;
-    background: #fff;
-    border-radius: 16px;
-    border: 1px solid #E5E2DA;
-    overflow: hidden;
-  }
-  #card-header {
-    padding: 16px 18px 14px;
-    border-bottom: 1px solid #F0EDE6;
-    display: flex; align-items: flex-start; justify-content: space-between;
-  }
-  #card-part {
-    font-size: 11px; font-weight: 600;
-    color: #2E7D57;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  #card-title {
-    font-size: 20px; font-weight: 600;
-    color: #1A1A1A; line-height: 1.3;
-  }
-  #card-time {
-    font-size: 12px; color: #999;
-    background: #F5F3EE;
-    padding: 4px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-    margin-left: 10px;
-    margin-top: 2px;
-  }
-
-  /* ── Script ── */
+  #card { margin: 0 12px 20px; background: #fff; border-radius: 16px; border: 1px solid #E5E2DA; overflow: hidden; }
+  #card-header { padding: 16px 18px 14px; border-bottom: 1px solid #F0EDE6; display: flex; align-items: flex-start; justify-content: space-between; }
+  #card-part { font-size: 11px; font-weight: 600; color: #2E7D57; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  #card-title { font-size: 20px; font-weight: 600; color: #1A1A1A; line-height: 1.3; }
+  #card-time { font-size: 12px; color: #999; background: #F5F3EE; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-left: 10px; margin-top: 2px; }
   #script-wrap { padding: 18px 18px 16px; border-bottom: 1px solid #F0EDE6; }
-  #script-label {
-    font-size: 11px; font-weight: 600;
-    color: #B86A00;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  #script {
-    font-size: 17px; line-height: 1.85;
-    color: #1A1A1A;
-  }
-
-  /* ── Cues ── */
+  #script-label { font-size: 11px; font-weight: 600; color: #B86A00; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  #script { font-size: 17px; line-height: 1.85; color: #1A1A1A; }
   #cues-wrap { padding: 14px 18px 18px; }
-  #cues-label {
-    font-size: 11px; font-weight: 600;
-    color: #888;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .cue {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 8px 12px;
-    background: #F5F3EE;
-    border-radius: 10px;
-    margin-bottom: 6px;
-    font-size: 15px;
-    color: #3A3A3A;
-    line-height: 1.5;
-  }
-  .cue-dot {
-    flex-shrink: 0;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #2E7D57;
-    margin-top: 7px;
-  }
-
-  /* ── Bottom padding for safe area ── */
+  #cues-label { font-size: 11px; font-weight: 600; color: #888; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .cue { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; background: #F5F3EE; border-radius: 10px; margin-bottom: 6px; font-size: 15px; color: #3A3A3A; line-height: 1.5; }
+  .cue-dot { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #2E7D57; margin-top: 7px; }
   #bottom-pad { height: 40px; }
 </style>
 </head>
 <body>
-
 <div id="timer-bar">
   <div>
     <div id="clock">0:00</div>
@@ -161,19 +51,14 @@
     <button class="ctrl-btn" id="btn-reset">重設</button>
   </div>
 </div>
-
 <div id="slide-nav">
   <button class="nav-btn" id="btn-prev">← 上一頁</button>
   <div id="slide-counter">1 / 13</div>
   <button class="nav-btn" id="btn-next">下一頁 →</button>
 </div>
-
 <div id="card">
   <div id="card-header">
-    <div>
-      <div id="card-part"></div>
-      <div id="card-title"></div>
-    </div>
+    <div><div id="card-part"></div><div id="card-title"></div></div>
     <div id="card-time"></div>
   </div>
   <div id="script-wrap">
@@ -185,149 +70,61 @@
     <div id="cues"></div>
   </div>
 </div>
-
 <div id="bottom-pad"></div>
-
 <script>
-const TOTAL = 7.5 * 60;
-const slides = [
-  {
-    part:"封面", title:"開場", time:"建議 15 秒",
-    script:"大家好，我是袁翊庭，今天要介紹的論文是許智涵和莊惠君在 2023 年發表的〈國小高年級學生音樂聆聽情緒與偏好之調查研究〉。",
-    cues:["許智涵、莊惠君","2023","臺北市立大學學報"]
-  },
-  {
-    part:"Part 1", title:"論文基本資料", time:"建議 45 秒",
-    script:"這篇刊登在臺北市立大學學報人文社會類第 54 卷第 2 期，頁 21 到 46。兩位作者，許智涵是臺北市士東國小的現職教師，莊惠君是臺師大音樂系副教授，一位來自教學現場、一位來自學術界，這個組合讓研究同時兼具實務和學術的深度。研究對象是臺北、新北、臺中、高雄四大都會區各一所國小的五、六年級學生，共 1,032 人。關鍵詞是音樂欣賞、音樂偏好，以及音樂聆聽情緒。",
-    cues:["54(2) 頁 21-46","許智涵實務＋莊惠君學術","1,032 人","三個關鍵詞"]
-  },
-  {
-    part:"Part 2", title:"選擇此論文的理由", time:"建議 45 秒",
-    script:"我選這篇有三個理由。第一，它同時涵蓋了音樂引發的行為，也就是聆聽情緒，以及參與音樂的行為，也就是音樂聆聽這件事，完全符合老師課堂上說的音樂心理學定義。第二，研究對象就是台灣國小高年級學生，跟我的教學現場直接相關，讀起來很有共鳴。第三，理論架構清楚，用的是 Russell 的情緒環形模型，研究方法也是問卷調查，不難理解。",
-    cues:["音樂心理學定義（Eagle, 1996）","台灣國小現場","Russell＋問卷"]
-  },
-  {
-    part:"Part 3", title:"研究目的與問題", time:"建議 45 秒",
-    script:"這篇的研究目的是瞭解國小高年級學生聆聽音樂欣賞曲時三個面向：第一，他們的聆聽情緒是什麼；第二，他們的音樂偏好是什麼；第三，情緒和偏好之間有什麼關係。對應這三個目的，研究者提出三個待答問題：不同背景的學生，包含年級、性別和人格特質，他們的聆聽情緒、音樂偏好，以及情緒和偏好的關係各是如何。",
-    cues:["目的：情緒、偏好、兩者關係","Q1情緒、Q2偏好、Q3關係","背景：年級、性別、人格"]
-  },
-  {
-    part:"Part 4", title:"關鍵名詞定義", time:"建議 45 秒",
-    script:"這篇有三個核心名詞。第一，音樂欣賞，是音樂活動的根本，也是引發個人情緒的重要途徑。第二，音樂偏好，根據 LeBlanc 1984 年的定義，是對特定音樂刺激表明其喜歡的程度，這個反應主觀且瞬間，跟你的音樂知識多不多沒有關係。第三，音樂聆聽情緒，根據 Russell 1980 年的研究，聆聽音樂後產生的情緒反應可以分為正向情緒和負向情緒兩大類。",
-    cues:["音樂欣賞：根本、引發情緒","音樂偏好：LeBlanc 1984，主觀且瞬間，與知識無關","音樂聆聽情緒：Russell 1980，正向／負向"]
-  },
-  {
-    part:"Part 5", title:"重要理論與人物", time:"建議 60 秒",
-    script:"這篇引用了四位重要學者。最核心的是 Russell，他在 1980 年提出情緒環形模型，把情緒分成正向和負向兩個維度，是本研究情緒分類的理論基礎。第二位是 Bruner，1990 年歸納出音樂最常引發的五類情緒：激動、平靜、嚴肅、快樂和悲傷。第三位是 Juslin 等人，2011 年發現音樂最常讓人感到快樂、冷靜、愛、悲傷、激動和懷舊。第四位是 Huron，2006 年提出 ITPRA 理論，說明大腦透過想像、張力、預期、動作、評價五個階段來感知音樂。",
-    cues:["Russell 1980：情緒環形模型（最核心！）","Bruner 1990：五類情緒","Juslin 2011：六種情緒","Huron 2006：ITPRA 五階段"]
-  },
-  {
-    part:"Part 6", title:"研究方法", time:"建議 45 秒",
-    script:"研究採用問卷調查法，對象是臺北、新北、臺中、高雄四大都會區各一所國小五、六年級學生，共 1,032 人。資料分析方法包含描述性統計、卡方檢定、t 檢定，以及單因子變異數分析。研究流程分四步驟：先編製問卷，再選定樣本，接著在課堂上播放音樂欣賞曲請學生填答，最後進行統計分析。",
-    cues:["問卷調查法","1,032 人","描述統計、卡方、t、ANOVA","四步驟"]
-  },
-  {
-    part:"Part 7", title:"研究工具與實作", time:"建議 45 秒",
-    script:"研究工具是自編的「音樂偏好與音樂聆聽情緒問卷」。問卷分兩部分，第一部分請學生聆聽樂曲後，從八種情緒勾選感受：嚴肅、悲傷、夢幻、平靜、幽默、快樂、激動、有活力。第二部分是偏好程度，用五個臉部表情圖示評分，從非常不喜歡到非常喜歡。整份問卷共 30 首樂曲，另附人格特質量表 30 題。右邊的 QR Code 可以掃描連到論文全文。",
-    cues:["自編問卷","情緒 8 選項：嚴肅悲傷夢幻平靜幽默快樂激動有活力","偏好 5 等級臉部表情","30 首樂曲＋人格量表 30 題"]
-  },
-  {
-    part:"Part 8", title:"研究結論（1/2）", time:"建議 30 秒",
-    script:"研究共有五個發現，先說前三個。第一，學生最常感受到的情緒是激動、有活力和悲傷。第二，曲速快、大調、管弦樂編制的樂曲，較容易讓學生感到激動或有活力。第三，學生對讓他們感到快樂的曲目偏好顯著較高，也就是快樂的情緒帶來更高的喜愛度。",
-    cues:["01：激動、有活力、悲傷","02：快板＋大調＋管弦樂 → 激動有活力","03：快樂情緒 → 高偏好"]
-  },
-  {
-    part:"Part 8", title:"研究結論（2/2）", time:"建議 30 秒",
-    script:"後兩個發現跟性別和人格特質有關。第四，男生偏愛激動和有活力的曲目，女生偏愛夢幻的曲目。第五，和善性人格的學生整體偏好最高，但外傾性人格反而最低，這個結果跟我們一般的直覺相反，非常值得注意。",
-    cues:["04：男→激動有活力；女→夢幻","05：和善性最高；外傾性最低（反直覺！）"]
-  },
-  {
-    part:"Part 9", title:"報告心得", time:"建議 30 秒",
-    script:"讀完這篇有三點心得。第一，音樂課選曲不能只靠老師主觀判斷，應考量學生的情緒反應和性別差異。第二，和善性學生偏好最高這個發現推翻了我以為外向學生最愛音樂的直覺，讓我更重視個別差異。第三，這篇只用教科書欣賞曲，未來若加入歌唱曲和直笛曲，用更細緻的情緒詞彙，可以幫助學生更完整表達聆聽感受。",
-    cues:["多元選曲、考量情緒與性別","和善性反直覺、個別差異","研究限制：只有欣賞曲"]
-  },
-  {
-    part:"Part 10", title:"參考文獻", time:"建議 10 秒",
-    script:"參考文獻整理如投影片所示，依 APA 格式，中文在前按筆畫、英文在後按字母排序。",
-    cues:["不用逐條唸，帶過就好"]
-  },
-  {
-    part:"結語", title:"感謝", time:"建議 10 秒",
-    script:"以上是我的報告，謝謝老師和同學的聆聽，敬請指教。",
-    cues:["微笑、停頓、等提問"]
-  }
+const TOTAL=7.5*60;
+const slides=[
+  {part:"封面",title:"開場",time:"建議 15 秒",script:"大家好，我是袁翊庭，今天要介紹的論文是許智涵和莊惠君在 2023 年發表的〈國小高年級學生音樂聆聽情緒與偏好之調查研究〉。",cues:["許智涵、莊惠君","2023","臺北市立大學學報"]},
+  {part:"Part 1",title:"論文基本資料",time:"建議 45 秒",script:"這篇刊登在臺北市立大學學報人文社會類第 54 卷第 2 期，頁 21 到 46。兩位作者，許智涵是臺北市士東國小的現職教師，莊惠君是臺師大音樂系副教授，一位來自教學現場、一位來自學術界，這個組合讓研究同時兼具實務和學術的深度。研究對象是臺北、新北、臺中、高雄四大都會區各一所國小的五、六年級學生，共 1,032 人。關鍵詞是音樂欣賞、音樂偏好，以及音樂聆聽情緒。",cues:["54(2) 頁 21-46","許智涵實務＋莊惠君學術","1,032 人","三個關鍵詞"]},
+  {part:"Part 2",title:"選擇此論文的理由",time:"建議 45 秒",script:"我選這篇有三個理由。第一，它同時涵蓋了音樂引發的行為，也就是聆聽情緒，以及參與音樂的行為，也就是音樂聆聽這件事，完全符合老師課堂上說的音樂心理學定義。第二，研究對象就是台灣國小高年級學生，跟我的教學現場直接相關，讀起來很有共鳴。第三，理論架構清楚，用的是 Russell 的情緒環形模型，研究方法也是問卷調查，不難理解。",cues:["音樂心理學定義（Eagle, 1996）","台灣國小現場","Russell＋問卷"]},
+  {part:"Part 3",title:"研究目的與問題",time:"建議 45 秒",script:"這篇的研究目的是瞭解國小高年級學生聆聽音樂欣賞曲時三個面向：第一，他們的聆聽情緒是什麼；第二，他們的音樂偏好是什麼；第三，情緒和偏好之間有什麼關係。對應這三個目的，研究者提出三個待答問題：不同背景的學生，包含年級、性別和人格特質，他們的聆聽情緒、音樂偏好，以及情緒和偏好的關係各是如何。",cues:["目的：情緒、偏好、兩者關係","Q1情緒、Q2偏好、Q3關係","背景：年級、性別、人格"]},
+  {part:"Part 4",title:"關鍵名詞定義",time:"建議 45 秒",script:"這篇有三個核心名詞。第一，音樂欣賞，是音樂活動的根本，也是引發個人情緒的重要途徑。第二，音樂偏好，根據 LeBlanc 1984 年的定義，是對特定音樂刺激表明其喜歡的程度，這個反應主觀且瞬間，跟你的音樂知識多不多沒有關係。第三，音樂聆聽情緒，根據 Russell 1980 年的研究，聆聽音樂後產生的情緒反應可以分為正向情緒和負向情緒兩大類。",cues:["音樂欣賞：根本、引發情緒","音樂偏好：LeBlanc 1984，主觀且瞬間，與知識無關","音樂聆聽情緒：Russell 1980，正向／負向"]},
+  {part:"Part 5",title:"重要理論與人物",time:"建議 60 秒",script:"這篇引用了四位重要學者。最核心的是 Russell，他在 1980 年提出情緒環形模型，把情緒分成正向和負向兩個維度，是本研究情緒分類的理論基礎。第二位是 Bruner，1990 年歸納出音樂最常引發的五類情緒：激動、平靜、嚴肅、快樂和悲傷。第三位是 Juslin 等人，2011 年發現音樂最常讓人感到快樂、冷靜、愛、悲傷、激動和懷舊。第四位是 Huron，2006 年提出 ITPRA 理論，說明大腦透過想像、張力、預期、動作、評價五個階段來感知音樂。",cues:["Russell 1980：情緒環形模型（最核心！）","Bruner 1990：五類情緒","Juslin 2011：六種情緒","Huron 2006：ITPRA 五階段"]},
+  {part:"Part 6",title:"研究方法",time:"建議 45 秒",script:"研究採用問卷調查法，對象是臺北、新北、臺中、高雄四大都會區各一所國小五、六年級學生，共 1,032 人。資料分析方法包含描述性統計、卡方檢定、t 檢定，以及單因子變異數分析。研究流程分四步驟：先編製問卷，再選定樣本，接著在課堂上播放音樂欣賞曲請學生填答，最後進行統計分析。",cues:["問卷調查法","1,032 人","描述統計、卡方、t、ANOVA","四步驟"]},
+  {part:"Part 7",title:"研究工具與實作",time:"建議 45 秒",script:"研究工具是自編的「音樂偏好與音樂聆聽情緒問卷」。問卷分兩部分，第一部分請學生聆聽樂曲後，從八種情緒勾選感受：嚴肅、悲傷、夢幻、平靜、幽默、快樂、激動、有活力。第二部分是偏好程度，用五個臉部表情圖示評分，從非常不喜歡到非常喜歡。整份問卷共 30 首樂曲，另附人格特質量表 30 題。右邊的 QR Code 可以掃描連到論文全文。",cues:["自編問卷","情緒 8 選項：嚴肅悲傷夢幻平靜幽默快樂激動有活力","偏好 5 等級臉部表情","30 首樂曲＋人格量表 30 題"]},
+  {part:"Part 8",title:"研究結論（1/2）",time:"建議 30 秒",script:"研究共有五個發現，先說前三個。第一，學生最常感受到的情緒是激動、有活力和悲傷。第二，曲速快、大調、管弦樂編制的樂曲，較容易讓學生感到激動或有活力。第三，學生對讓他們感到快樂的曲目偏好顯著較高，也就是快樂的情緒帶來更高的喜愛度。",cues:["01：激動、有活力、悲傷","02：快板＋大調＋管弦樂 → 激動有活力","03：快樂情緒 → 高偏好"]},
+  {part:"Part 8",title:"研究結論（2/2）",time:"建議 30 秒",script:"後兩個發現跟性別和人格特質有關。第四，男生偏愛激動和有活力的曲目，女生偏愛夢幻的曲目。第五，和善性人格的學生整體偏好最高，但外傾性人格反而最低，這個結果跟我們一般的直覺相反，非常值得注意。",cues:["04：男→激動有活力；女→夢幻","05：和善性最高；外傾性最低（反直覺！）"]},
+  {part:"Part 9",title:"報告心得",time:"建議 30 秒",script:"讀完這篇有三點心得。第一，音樂課選曲不能只靠老師主觀判斷，應考量學生的情緒反應和性別差異。第二，和善性學生偏好最高這個發現推翻了我以為外向學生最愛音樂的直覺，讓我更重視個別差異。第三，這篇只用教科書欣賞曲，未來若加入歌唱曲和直笛曲，用更細緻的情緒詞彙，可以幫助學生更完整表達聆聽感受。",cues:["多元選曲、考量情緒與性別","和善性反直覺、個別差異","研究限制：只有欣賞曲"]},
+  {part:"Part 10",title:"參考文獻",time:"建議 10 秒",script:"參考文獻整理如投影片所示，依 APA 格式，中文在前按筆畫、英文在後按字母排序。",cues:["不用逐條唸，帶過就好"]},
+  {part:"結語",title:"感謝",time:"建議 10 秒",script:"以上是我的報告，謝謝老師和同學的聆聽，敬請指教。",cues:["微笑、停頓、等提問"]}
 ];
-
-let current = 0, elapsed = 0, running = false, iv = null;
-
-const clock = document.getElementById('clock');
-const bar = document.getElementById('progress-bar');
-const btnStart = document.getElementById('btn-start');
-const btnReset = document.getElementById('btn-reset');
-const btnPrev = document.getElementById('btn-prev');
-const btnNext = document.getElementById('btn-next');
-const counter = document.getElementById('slide-counter');
-
-function fmt(s) {
-  return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+let current=0,elapsed=0,running=false,iv=null;
+const clock=document.getElementById('clock');
+const bar=document.getElementById('progress-bar');
+const btnStart=document.getElementById('btn-start');
+const btnReset=document.getElementById('btn-reset');
+const btnPrev=document.getElementById('btn-prev');
+const btnNext=document.getElementById('btn-next');
+const counter=document.getElementById('slide-counter');
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function updateClock(){
+  clock.textContent=fmt(elapsed);
+  const pct=Math.min((elapsed/TOTAL)*100,100);
+  bar.style.width=pct+'%';
+  if(elapsed>=TOTAL){bar.style.background='#C0392B';clock.className='over';}
+  else if(elapsed>=TOTAL*0.85){bar.style.background='#B86A00';clock.className='warn';}
+  else{bar.style.background='#2E7D57';clock.className='';}
 }
-
-function updateClock() {
-  clock.textContent = fmt(elapsed);
-  const pct = Math.min((elapsed/TOTAL)*100, 100);
-  bar.style.width = pct + '%';
-  if (elapsed >= TOTAL) {
-    bar.style.background = '#C0392B';
-    clock.className = 'over';
-  } else if (elapsed >= TOTAL * 0.85) {
-    bar.style.background = '#B86A00';
-    clock.className = 'warn';
-  } else {
-    bar.style.background = '#2E7D57';
-    clock.className = '';
-  }
+function render(){
+  const s=slides[current];
+  counter.textContent=(current+1)+' / '+slides.length;
+  document.getElementById('card-part').textContent=s.part;
+  document.getElementById('card-title').textContent=s.title;
+  document.getElementById('card-time').textContent=s.time;
+  document.getElementById('script').textContent=s.script;
+  document.getElementById('cues').innerHTML=s.cues.map(c=>'<div class="cue"><div class="cue-dot"></div><span>'+c+'</span></div>').join('');
+  btnPrev.disabled=current===0;
+  btnNext.disabled=current===slides.length-1;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function render() {
-  const s = slides[current];
-  counter.textContent = (current+1) + ' / ' + slides.length;
-  document.getElementById('card-part').textContent = s.part;
-  document.getElementById('card-title').textContent = s.title;
-  document.getElementById('card-time').textContent = s.time;
-  document.getElementById('script').textContent = s.script;
-  document.getElementById('cues').innerHTML = s.cues.map(c =>
-    '<div class="cue"><div class="cue-dot"></div><span>' + c + '</span></div>'
-  ).join('');
-  btnPrev.disabled = current === 0;
-  btnNext.disabled = current === slides.length - 1;
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-btnStart.addEventListener('click', () => {
-  if (running) {
-    clearInterval(iv); running = false;
-    btnStart.textContent = '繼續';
-    btnStart.classList.add('paused');
-  } else {
-    running = true;
-    btnStart.textContent = '暫停';
-    btnStart.classList.remove('paused');
-    iv = setInterval(() => { elapsed++; updateClock(); }, 1000);
-  }
+btnStart.addEventListener('click',()=>{
+  if(running){clearInterval(iv);running=false;btnStart.textContent='繼續';btnStart.classList.add('paused');}
+  else{running=true;btnStart.textContent='暫停';btnStart.classList.remove('paused');iv=setInterval(()=>{elapsed++;updateClock();},1000);}
 });
-
-btnReset.addEventListener('click', () => {
-  clearInterval(iv); running = false; elapsed = 0;
-  btnStart.textContent = '開始';
-  btnStart.classList.remove('paused');
-  updateClock();
-});
-
-btnPrev.addEventListener('click', () => { if (current > 0) { current--; render(); } });
-btnNext.addEventListener('click', () => { if (current < slides.length-1) { current++; render(); } });
-
-render();
-updateClock();
+btnReset.addEventListener('click',()=>{clearInterval(iv);running=false;elapsed=0;btnStart.textContent='開始';btnStart.classList.remove('paused');updateClock();});
+btnPrev.addEventListener('click',()=>{if(current>0){current--;render();}});
+btnNext.addEventListener('click',()=>{if(current<slides.length-1){current++;render();}});
+render();updateClock();
 </script>
 </body>
 </html>
